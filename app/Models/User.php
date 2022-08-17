@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @method static paginate($get)
+ * @method static create(array $all)
  */
 class User extends Authenticatable
 {
