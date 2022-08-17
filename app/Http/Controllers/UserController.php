@@ -44,12 +44,14 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param User $user
-     * @return Response
+     * @param int $id
+     * @return UserResource
      */
-    public function show(User $user)
+    public function show(int $id): UserResource
     {
-        //
+        $user = User::find($id);
+
+        return new UserResource($user);
     }
 
     /**
