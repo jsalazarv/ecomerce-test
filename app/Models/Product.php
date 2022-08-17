@@ -13,6 +13,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 /**
  * @method static paginate($get)
  * @method static create(array $all)
+ * @method static find(Product $product)
  */
 class Product extends Model implements HasMedia
 {

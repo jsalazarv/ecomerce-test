@@ -45,12 +45,14 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Product $product
-     * @return Response
+     * @param int $id
+     * @return ProductResource
      */
-    public function show(Product $product)
+    public function show(int $id): ProductResource
     {
-        //
+        $product = Product::find($id);
+
+        return new ProductResource($product);
     }
 
     /**
