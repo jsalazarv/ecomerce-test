@@ -58,12 +58,15 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateUserRequest $request
-     * @param User $user
-     * @return Response
+     * @param int $id
+     * @return UserResource
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, int $id): UserResource
     {
-        //
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+
+        return new UserResource($user);
     }
 
     /**
