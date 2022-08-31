@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Products;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
 {
@@ -25,11 +27,11 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => ['required', 'unique:products,name','string', 'max:255'],
-            'slug' => ['required', 'unique:products,slug','string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
             'price' => ['required', 'numeric'],
             'status' => ['required', 'boolean'],
-            'photo' => ['required', 'image', 'mimes:jpeg,png'],
+            'photos' => ['required', 'array', 'min:1'],
+            'photos.*' => ['image', 'mimes:jpeg,png'],
         ];
     }
 }
