@@ -14,6 +14,11 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        Product::factory()->count(100)->create();
+        $products = Product::factory()->count(100)->create();
+        $pathToFile = storage_path('resources/placeholder.jpeg');
+
+        foreach($products as $product){
+            $product->addMedia($pathToFile)->preservingOriginal()->toMediaCollection('photos');
+        }
     }
 }

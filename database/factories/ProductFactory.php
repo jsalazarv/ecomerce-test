@@ -18,7 +18,8 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->words(2, true);
+        $randomNumber = $this->faker->randomDigit();
+        $name = $this->faker->words(2, true) . $randomNumber;
 
         return [
             'name' => $name,

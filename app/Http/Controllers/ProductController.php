@@ -56,17 +56,30 @@ class ProductController extends Controller
         return new ProductResource($product);
     }
 
+
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\Products\UpdateProductRequest $request
-     * @param Product $product
-     * @return Response
+     * @param UpdateProductRequest $request
+     * @param int $id
+     * @return ProductResource
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, int $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->update($request->all());
+
+        if($request->hasFile('photos')) {
+            $product->media()->delete();
+            $product->addMultipleMediaFromRequest(['photos'])
+                ->each(function ($fileAdder) {
+                    $fileAdder->toMediaCollection('photos');
+                });
+        }
+
+        return new ProductResource($product);
     }
+
 
     /**
      * Remove the specified resource from storage.
