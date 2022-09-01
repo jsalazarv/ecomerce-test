@@ -35,9 +35,10 @@ class ProductController extends Controller
     {
         $product = Product::create($request->all());
 
-        if(isset($request['photo'])) {
-            $product->addMediaFromRequest('photo')->toMediaCollection('photos');
-        }
+        $product->addMultipleMediaFromRequest(['photos'])
+            ->each(function ($fileAdder) {
+                $fileAdder->toMediaCollection('photos');
+            });
 
         return new ProductResource($product);
     }

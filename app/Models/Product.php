@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -13,7 +14,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 /**
  * @method static paginate($get)
  * @method static create(array $all)
- * @method static find(Product $product)
+ * @method static find(int $id)
  */
 class Product extends Model implements HasMedia
 {
@@ -37,5 +38,12 @@ class Product extends Model implements HasMedia
             ->addMediaConversion('photo')
             ->fit(Manipulations::FIT_CROP, 300, 300)
             ->nonQueued();
+    }
+
+    protected static function booted()
+    {
+        static::saving(function ($product) {
+            $product->slug = Str::slug($product->name);
+        });
     }
 }
